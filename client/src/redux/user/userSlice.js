@@ -24,8 +24,8 @@ const userSlice = createSlice({
             state.error = action.payload
         },
     },
-})
+});
 
-export const { signinStart, signinSuccess, signinFailure } = userSlice.actions
+export const { signinStart, signinSuccess, signinFailure } = userSlice.actions;
 
-export default userSlice.reducer
+export default userSlice.reducer;
