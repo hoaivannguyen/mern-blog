@@ -12,7 +12,7 @@ export default function DashPosts() {
   const [showModal, setShowModal] = useState(false)
   const [postIdToDelete, setPostIdToDelete] = useState("")
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPost = async () => {
       try {
         const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`)
         const data = await res.json()
@@ -27,7 +27,7 @@ export default function DashPosts() {
       }
     }
     if (currentUser.isAdmin) {
-      fetchPosts()
+      fetchPost()
     }
   }, [currentUser._id])
 
@@ -86,7 +86,8 @@ export default function DashPosts() {
             </Table.Head>
             {userPosts.map((post) => (
               <Table.Body className="divide-y">
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Row className="bg-white dark:border-gray-700 
+                dark:bg-gray-800">
                   <Table.Cell>
                     {new Date(post.updatedAt).toLocaleDateString()}
                   </Table.Cell>
@@ -110,7 +111,8 @@ export default function DashPosts() {
                         setShowModal(true)
                         setPostIdToDelete(post._id)
                       }} 
-                      className="font-medium text-red-500 hover:underline cursor-pointer"
+                      className="font-medium text-red-500 hover:underline 
+                      cursor-pointer"
                     >
                       Delete
                     </span>
@@ -151,7 +153,8 @@ export default function DashPosts() {
             <HiOutlineExclamationCircle 
             className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200"
             />
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            <h3 className="mb-5 text-lg font-normal text-gray-500 
+            dark:text-gray-400">
               Are you sure you want to delete this post?
             </h3>
             <div className="flex justify-center gap-4">
