@@ -1,4 +1,4 @@
-import { Table, Modal, Button, ModalHeader } from "flowbite-react"
+import { Table, Modal, Button } from "flowbite-react"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -146,7 +146,7 @@ export default function DashPosts() {
         popup 
         size={"md"}
       >
-        <ModalHeader />
+        <Modal.Header />
         <Modal.Body>
           <div className="text-center">
             <HiOutlineExclamationCircle 
