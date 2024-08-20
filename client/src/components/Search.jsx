@@ -9,6 +9,7 @@ export default function Search() {
     sort: "desc",
     category: "general",
   });
+  console.log(sidebarData);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -20,6 +21,7 @@ export default function Search() {
     const searchTermFromUrl = urlParams.get("searchTerm");
     const sortFromUrl = urlParams.get("sort");
     const categoryFromUrl = urlParams.get("category");
+    
     if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
       setSidebarData({ 
         ...sidebarData, 
@@ -28,6 +30,7 @@ export default function Search() {
         category: categoryFromUrl,
       });
     }
+    
     const fetchPosts = async () => {
       setLoading(true);
       const searchQuery = urlParams.toString();
@@ -46,9 +49,10 @@ export default function Search() {
           setShowMore(false);
         }
       }
-    } 
+    }
     fetchPosts();
   }, [location.search])
+
 
   const handleChange = (e) => {
     if (e.target.id === "searchTerm") {
@@ -71,7 +75,7 @@ export default function Search() {
     urlParams.set("sort", sidebarData.sort);
     urlParams.set("category", sidebarData.category);
     const SearchQuery = urlParams.toString();
-    navigate(`/?${SearchQuery}`);
+    navigate(`/search?${SearchQuery}`);
   }
 
   const handleShowMore = async () => {
@@ -142,16 +146,17 @@ export default function Search() {
       </div>
       <div className="w-full">
         <h1 className="text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5">
-          Posts results
+          Posts results:
         </h1>
         <div className="p-7 flex flex-wrap gap-4">
           {!loading && posts.length === 0 && (
             <p className="text-xl text-gray-500">No posts found.</p>
           )}
           {loading && <p className="text-xl text-gray-500">Loading...</p>}
-          {!loading && posts && posts.map((post) => 
-            <PostCard key={post._id} post={post} />
-          )}
+          {!loading && 
+            posts && 
+            posts.map((post) => <PostCard key={post._id} 
+            post={post} />)}
           {showMore && 
             <button 
               className="text-teal-500 text-lg hover:underline p-7 w-full"
