@@ -20,6 +20,10 @@ const albumSchema = new mongoose.Schema(
         type: String,
         default: '',
     },
+    location: {
+      type: String,
+      default: '',
+    },
     slug: {
       type: String,
       required: true,
@@ -35,6 +39,9 @@ const albumSchema = new mongoose.Schema(
         default: '',
       },
     }],
+    audio: {
+      type: String,
+    },
   }, { timestamps: true }
 );
 

@@ -4,20 +4,20 @@ import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 
-export default function DashPosts() {
+export default function DashAlbums() {
   const { currentUser } = useSelector(state => state.user)
-  const [userPosts, setUserPosts] = useState([])
+  const [userAlbums, setUserAlbums] = useState([])
   const [showMore, setShowMore] = useState(true)
   const [showModal, setShowModal] = useState(false)
-  const [postIdToDelete, setPostIdToDelete] = useState("")
+  const [albumIdToDelete, setAlbumIdToDelete] = useState("")
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchAlbum = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`)
+        const res = await fetch(`/api/album/getalbums?userId=${currentUser._id}`)
         const data = await res.json()
         if (res.ok) {
-          setUserPosts(data.posts)
-          if (data.posts.length < 9) {
+          setUserAlbums(data.albums)
+          if (data.albums.length < 9) {
             setShowMore(false)
         }
       } 
@@ -26,19 +26,19 @@ export default function DashPosts() {
       }
     }
     if (currentUser.isAdmin) {
-      fetchPost()
+      fetchAlbum()
     }
   }, [currentUser._id])
 
   const handleShowMore = async () => {
-    const startIndex = userPosts.length
+    const startIndex = userAlbums.length
     try {
       const res = await 
-      fetch(`/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`)
+      fetch(`/api/album/getalbums?userId=${currentUser._id}&startIndex=${startIndex}`)
       const data = await res.json()
       if (res.ok) {
-        setUserPosts((prev) => [...userPosts, ...data.posts])
-        if (data.posts.length < 9) {
+        setUserAlbums((prev) => [...userAlbums, ...data.albums])
+        if (data.albums.length < 9) {
           setShowMore(false)
       }
     } 
@@ -47,19 +47,19 @@ export default function DashPosts() {
     }
   }
 
-  const handleDeletePost = async () => {
+  const handleDeleteAlbum = async () => {
     setShowModal(false)
     try {
       const res = await fetch(
-        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`, 
+        `/api/album/deletealbum/${albumIdToDelete}/${currentUser._id}`, 
         { method: "DELETE", }
       )
       const data = await res.json()
       if (!res.ok) {
         console.log(data.message)
       } else {
-        setUserPosts((prev) =>
-           prev.filter((post) => post._id !== postIdToDelete)
+        setUserAlbums((prev) =>
+           prev.filter((album) => album._id !== albumIdToDelete)
       )}
     } catch (error) {
       console.log(error.message)
@@ -70,45 +70,45 @@ export default function DashPosts() {
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar
      scrollbar-track-slate-100 scrollbar-thumb-slate-300 
      dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && userPosts.length > 0 ? (
+      {currentUser.isAdmin && userAlbums.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
             <Table.Head>
               <Table.HeadCell>Date updated</Table.HeadCell>
-              <Table.HeadCell>Post image</Table.HeadCell>
-              <Table.HeadCell>Post title</Table.HeadCell>
+              <Table.HeadCell>Album image</Table.HeadCell>
+              <Table.HeadCell>Album title</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
               </Table.HeadCell>
             </Table.Head>
-            {userPosts.map((post) => (
+            {userAlbums.map((album) => (
               <Table.Body className="divide-y">
                 <Table.Row className="bg-white dark:border-gray-700 
                 dark:bg-gray-800">
                   <Table.Cell>
-                    {new Date(post.updatedAt).toLocaleDateString()}
+                    {new Date(album.updatedAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/post/${post.slug}`}>
+                    <Link to={`/album/${album.slug}`}>
                       <img
-                        src={post.image}
-                        alt={post.title}
+                        src={album.image}
+                        alt={album.title}
                         className="w-10 h-20 object-cover bg-gray-500"
                       />
                     </Link>
                   </Table.Cell>
                   <Table.Cell>
                     <Link className="font-medium text-gray-900 dark:text-white" 
-                    to={`/post/${post.slug}`}>{post.title}</Link>
+                    to={`/album/${album.slug}`}>{album.title}</Link>
                   </Table.Cell>
-                  <Table.Cell>{post.author}</Table.Cell>
+                  <Table.Cell>{album.author}</Table.Cell>
                   <Table.Cell>
                     <span 
                       onClick={() => {
                         setShowModal(true)
-                        setPostIdToDelete(post._id)
+                        setAlbumIdToDelete(album._id)
                       }} 
                       className="font-medium text-red-500 hover:underline 
                       cursor-pointer"
@@ -119,7 +119,7 @@ export default function DashPosts() {
                   <Table.Cell>
                     <Link 
                       className="text-teal-500 hover:underline" 
-                      to={`/update-post/${post._id}`}
+                      to={`/update-album/${album._id}`}
                     >
                       <span>Edit</span>
                     </Link>
@@ -138,7 +138,7 @@ export default function DashPosts() {
           )}
         </>
       ) : (
-        <p>You have no posts yet</p>
+        <p>You have no albums yet</p>
       )}
       <Modal 
         show={showModal} 
@@ -154,10 +154,10 @@ export default function DashPosts() {
             />
             <h3 className="mb-5 text-lg font-normal text-gray-500 
             dark:text-gray-400">
-              Are you sure you want to delete this post?
+              Are you sure you want to delete this album?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={handleDeletePost}>
+              <Button color="failure" onClick={handleDeleteAlbum}>
                 Yes, I'm sure
               </Button>
               <Button onClick={() => setShowModal(false)} color="gray">

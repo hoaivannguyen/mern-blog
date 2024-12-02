@@ -96,12 +96,11 @@ export default function CreatePost() {
             onChange={(e) => setFormData({ ...formData, title: e.target.value })} 
           />
           <Select
-            onChange={(e) => setFormData({ ...formData, category: e.target.value })}  
+            onChange={(e) => setFormData({ ...formData, author: e.target.value })}  
           >
-            <option value={"general"}>Select a category</option>
-            <option value={"javascript"}>Javascript</option>
-            <option value={"reactjs"}>React.js</option>
-            <option value={"nextjs"}>Next.js</option>
+            <option value={"Unknown"}>Author</option>
+            <option value={"Dieu Quynh Anh"}>Dieu Quynh Anh</option>
+            <option value={"Hoai Van"}>Hoai Van</option>
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4

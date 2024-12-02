@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { useEffect, useState } from "react";
+import { GoHomeFill } from "react-icons/go";
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -49,16 +50,25 @@ export default function Header() {
   }
   
   return (
-    <Navbar className="border-b-2">
-      <Link to="/">Hoai + Dieu</Link>
-      <form onSubmit={handleSubmit}>
+    <Navbar className=" dark:bg-black dark:text-white flex justify-center sticky top-0 z-10">
+      <Link to="/" className="self-center whitespace-nonwrap text-sm sm:text-xl font-semibold">
+        <span className="px-2 py-1 bg-gradient-to-r from-pink-400 to-blue-700 rounded-lg text-white">Diệu + Hoài</span>
+        Blend
+      </Link>
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <Link to="/" className="">
+          <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
+            <GoHomeFill className="px-0"/>
+          </Button>
+        </Link> 
         <TextInput 
             type="text" 
             placeholder="Search..."
             rightIcon={AiOutlineSearch}
-            className="hidden lg:inline"
+            className="hidden lg:inline font-semibold"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ backgroundColor: theme === 'dark' ? '#1f1f1f' : '#ffffff', borderRadius: '9999px' }}
         />
       </form>
       <Button className="w-12 h-10 lg:hidden" color="gray" pill>
@@ -66,7 +76,7 @@ export default function Header() {
       </Button>
       <div className="flex gap-2 md:order-2">
         <Button className="w-12 h-10 hidden sm:inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
-            {theme === "light" ? <FaSun /> : <FaMoon />}
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
         </Button>
         {currentUser ? (
           <Dropdown 
@@ -97,17 +107,6 @@ export default function Header() {
         )}
         <Navbar.Toggle />
       </div>
-      <Navbar.Collapse>
-            <Navbar.Link active={path === "/"} as={'div'}>
-                <Link to="/">Home</Link>
-            </Navbar.Link>
-            <Navbar.Link active={path === "/about"} as={'div'}> 
-                <Link to="/about">About</Link>
-            </Navbar.Link>
-            <Navbar.Link active={path === "/projects"} as={'div'}>
-                <Link to="/projects">Projects</Link>
-            </Navbar.Link>
-        </Navbar.Collapse>
     </Navbar>
   )
 }

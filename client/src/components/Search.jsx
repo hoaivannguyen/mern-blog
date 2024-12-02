@@ -7,7 +7,7 @@ export default function Search() {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: "",
     sort: "desc",
-    category: "general",
+    author: "unknown",
   });
   console.log(sidebarData);
   const [posts, setPosts] = useState([]);
@@ -20,14 +20,14 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
     const sortFromUrl = urlParams.get("sort");
-    const categoryFromUrl = urlParams.get("category");
+    const authorFromUrl = urlParams.get("author");
     
-    if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
+    if (searchTermFromUrl || sortFromUrl || authorFromUrl) {
       setSidebarData({ 
         ...sidebarData, 
         searchTerm: searchTermFromUrl, 
         sort: sortFromUrl,
-        category: categoryFromUrl,
+        author: authorFromUrl,
       });
     }
     
@@ -62,9 +62,9 @@ export default function Search() {
       const order = e.target.value || "desc";
       setSidebarData({ ...sidebarData, sort: order }); 
     }
-    if (e.target.id === "category") {
-      const category = e.target.value || "general";
-      setSidebarData({ ...sidebarData, category });
+    if (e.target.id === "author") {
+      const author = e.target.value || "unknown";
+      setSidebarData({ ...sidebarData, author });
     }
   }
 
@@ -73,7 +73,7 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("searchTerm", sidebarData.searchTerm);
     urlParams.set("sort", sidebarData.sort);
-    urlParams.set("category", sidebarData.category);
+    urlParams.set("author", sidebarData.author);
     const SearchQuery = urlParams.toString();
     navigate(`/search?${SearchQuery}`);
   }
@@ -127,16 +127,15 @@ export default function Search() {
             </Select>
           </div>
           <div className="flex items-center gap-2">
-            <label className="font-semibold">Category:</label>
+            <label className="font-semibold">Author:</label>
             <Select
               onChange={handleChange}
-              value={sidebarData.category}
-              id="category"
+              value={sidebarData.author}
+              id="author"
             >
-              <option value="general">General</option>
-              <option value="reactjs">React.js</option>
-              <option value="nextjs">Next.js</option>
-              <option value="javascript">Javascript</option>
+              <option value="general">Unknown</option>
+              <option value="reactjs">Dieu Quynh Anh</option>
+              <option value="nextjs">Hoai Van</option>
             </Select>
           </div>
           <Button type="submit" outline gradientDuoTone={"purpleToPink"}>
