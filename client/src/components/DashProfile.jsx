@@ -230,6 +230,17 @@ export default function DashProfile() {
               </Button>
             </Link>
         )}
+        {currentUser.isAdmin && (
+            <Link to="/create-album">
+              <Button
+                type="button"
+                gradientDuoTone={"purpleToBlue"}
+                className="w-full"
+              >
+                Create an album
+              </Button>
+            </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span onClick={() => setShowModal(true)} className="cursor-pointer">Delete Account</span>

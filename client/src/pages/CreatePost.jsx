@@ -3,18 +3,24 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (file) {
+      handleUploadImage();
+    }
+  }, [file]);
 
   const handleUploadImage = async () => {
     try {
@@ -34,7 +40,7 @@ export default function CreatePost() {
           setImageUploadProgress(progress.toFixed(0));
         },
         (error) => {
-          setImageUploadProgress("Image upload failed");
+          setImageUploadError("Image upload failed");
           setImageUploadProgress(null);
         },
         () => {
@@ -103,27 +109,16 @@ export default function CreatePost() {
           <FileInput 
             type="file" 
             accept="image/*" 
-            onChange={(e)=>setFile(e.target.files[0])}
-            />
-          <Button 
-            type="button" 
-            gradientDuoTone={"purpleToBlue"} 
-            size={"sm"} 
-            outline
-            onClick={handleUploadImage}
-            disabled={imageUploadProgress}
-          >
-            {imageUploadProgress ? (
-              <div className="w-16 h-16">
-                <CircularProgressbar 
-                  value={imageUploadProgress} 
-                  text={`${imageUploadProgress || 0}%`} 
-                />
-              </div>
-            ) : (
-                "Upload Image"
-            )}
-          </Button>
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          {imageUploadProgress && (
+            <div className="w-16 h-16">
+              <CircularProgressbar 
+                value={imageUploadProgress} 
+                text={`${imageUploadProgress || 0}%`} 
+              />
+            </div>
+          )}
         </div>
         {imageUploadError && <Alert color="failure">{imageUploadError}</Alert>}
         {formData.image && 
@@ -143,6 +138,6 @@ export default function CreatePost() {
         </Button>
         {publishError && <Alert className="mt-5" color="failure">{publishError}</Alert>}
       </form>
-  </div>
+    </div>
   )
 }
