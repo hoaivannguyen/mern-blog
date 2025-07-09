@@ -28,7 +28,7 @@ export default function AlbumPage() {
     const fetchAlbum = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/album/getalbums?slug=${albumSlug}`);
+        const res = await fetch(`/apis/album/getalbums?slug=${albumSlug}`);
         const data = await res.json();
         if (!res.ok) {
           setError(true);

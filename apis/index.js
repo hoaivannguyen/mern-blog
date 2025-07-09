@@ -32,11 +32,11 @@ app.listen(3000, () => {
   console.log("Server listening on port 3000!");
 });
 
-app.use("/api/user", userRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/post", postRoutes);
-app.use("/api/comment", commentRoutes);
-app.use("/api/album", albumRoutes);
+app.use("/apis/user", userRoutes);
+app.use("/apis/auth", authRoutes);
+app.use("/apis/post", postRoutes);
+app.use("/apis/comment", commentRoutes);
+app.use("/apis/album", albumRoutes);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 

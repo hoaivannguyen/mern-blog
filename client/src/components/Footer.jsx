@@ -24,7 +24,7 @@ export default function FooterCom({ showModal, setShowModal }) {
     const fetchAlbums = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/album/getalbums?slug=${albumSlug}`);
+        const res = await fetch(`/apis/album/getalbums?slug=${albumSlug}`);
         const data = await res.json();
 
         if (!res.ok) {
@@ -44,7 +44,7 @@ export default function FooterCom({ showModal, setShowModal }) {
 
     const fetchAllAlbums = async () => {
       try {
-        const res = await fetch('/api/album/getalbums');
+        const res = await fetch('/apis/album/getalbums');
         const data = await res.json();
 
         if (res.ok) {

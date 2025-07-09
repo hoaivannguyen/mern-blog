@@ -21,7 +21,7 @@ export default function CommentSection({postId}) {
       return
     }
     try {
-      const res = await fetch("/api/comment/create", {
+      const res = await fetch("/apis/comment/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function CommentSection({postId}) {
   useEffect(() => {
     const getComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getPostComments/${postId}`)
+        const res = await fetch(`/apis/comment/getPostComments/${postId}`)
         if (res.ok) {
           const data = await res.json()
           setComments(data)
@@ -60,7 +60,7 @@ export default function CommentSection({postId}) {
         navigate("/sign-in")
         return
       }
-      const res = await fetch(`/api/comment/likeComment/${commentId}`, 
+      const res = await fetch(`/apis/comment/likeComment/${commentId}`, 
       {method: "PUT",})
       if (res.ok) {
         const data = await res.json()
@@ -93,7 +93,7 @@ export default function CommentSection({postId}) {
         navigate("/sign-in")
         return
       }
-      const res = await fetch(`/api/comment/deleteComment/${commentId}`,
+      const res = await fetch(`/apis/comment/deleteComment/${commentId}`,
       {method: "DELETE"})
       if (res.ok) {
         const data = await res.json()

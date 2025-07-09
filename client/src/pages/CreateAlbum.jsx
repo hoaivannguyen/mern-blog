@@ -21,7 +21,7 @@ export default function CreateAlbum() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/album/create', {
+      const res = await fetch('/apis/album/create', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

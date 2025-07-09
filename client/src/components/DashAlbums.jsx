@@ -13,7 +13,7 @@ export default function DashAlbums() {
   useEffect(() => {
     const fetchAlbum = async () => {
       try {
-        const res = await fetch(`/api/album/getalbums?userId=${currentUser._id}`)
+        const res = await fetch(`/apis/album/getalbums?userId=${currentUser._id}`)
         const data = await res.json()
         if (res.ok) {
           setUserAlbums(data.albums)
@@ -34,7 +34,7 @@ export default function DashAlbums() {
     const startIndex = userAlbums.length
     try {
       const res = await 
-      fetch(`/api/album/getalbums?userId=${currentUser._id}&startIndex=${startIndex}`)
+      fetch(`/apis/album/getalbums?userId=${currentUser._id}&startIndex=${startIndex}`)
       const data = await res.json()
       if (res.ok) {
         setUserAlbums((prev) => [...userAlbums, ...data.albums])
@@ -51,7 +51,7 @@ export default function DashAlbums() {
     setShowModal(false)
     try {
       const res = await fetch(
-        `/api/album/deletealbum/${albumIdToDelete}/${currentUser._id}`, 
+        `/apis/album/deletealbum/${albumIdToDelete}/${currentUser._id}`, 
         { method: "DELETE", }
       )
       const data = await res.json()

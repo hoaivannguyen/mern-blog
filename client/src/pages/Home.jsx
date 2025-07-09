@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     try {
       const fetchRecentAlbums = async () => {
-        const res = await fetch(`/api/album/getalbums?limit=5`)
+        const res = await fetch(`/apis/album/getalbums?limit=5`)
         const data = await res.json()
         if (res.ok) {
           setRecentAlbums(data.albums)
@@ -33,7 +33,7 @@ export default function Home() {
   useEffect(() => {
     try {
       const fetchRecentPosts = async () => {
-        const res = await fetch(`/api/post/getposts?limit=3`)
+        const res = await fetch(`/apis/post/getposts?limit=3`)
         const data = await res.json()
         if (res.ok) {
           setRecentPosts(data.posts)
